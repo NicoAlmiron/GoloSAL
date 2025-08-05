@@ -8,12 +8,12 @@ namespace GoloSAL.Controllers
     public class MantenedorController : Controller
     {
 
-        ClienteDatos _ClieneteDatos = new ClienteDatos();
+        ClienteDatos _ClienteDatos = new ClienteDatos();
 
         public IActionResult Listar()
         {
             /*Muestra la lista de los clientes*/
-            var oLista = _ClieneteDatos.Listar();
+            var oLista = _ClienteDatos.Listar();
             
             return View(oLista);
         }
@@ -24,13 +24,13 @@ namespace GoloSAL.Controllers
         }
         /**/
         [HttpPost]
-        public IActionResult Guardar(ClienteModel oCliete)
+        public IActionResult Guardar(ClienteModel oCliente)
         {
             /*Este metodo recive los datos y los guarda en la BD */
             if (!ModelState.IsValid)
                 return View();
 
-            var respuesta = _ClieneteDatos.Guardar(oCliete);
+            var respuesta = _ClienteDatos.Guardar(oCliente);
 
             if (respuesta)
                 return RedirectToAction("Listar");
@@ -38,6 +38,46 @@ namespace GoloSAL.Controllers
                 return View();                
         }
 
+        public IActionResult Editar(int clienteID)
+        {
+            /*Devuelve la vista del formulario Editar*/
+            var ocliente =  _ClienteDatos.obtener(clienteID);
+            return View(ocliente);
+        }
+        /**/
+        [HttpPost]
+        public IActionResult Editar(ClienteModel oCliente)
+        {
+            /*Este metodo recive los datos y los guarda en la BD */
+            if (!ModelState.IsValid)
+                return View();
+
+            var respuesta = _ClienteDatos.Editar(oCliente);
+
+            if (respuesta)
+                return RedirectToAction("Listar");
+            else
+                return View();
+        }
+
+        public IActionResult Eliminar(int clienteID)
+        {
+            /*Devuelve la vista del formulario Eliminar*/
+            var ocliente = _ClienteDatos.obtener(clienteID);
+            return View(ocliente);
+        }
+        /**/
+        [HttpPost]
+        public IActionResult Eliminar(ClienteModel oCliente)
+        {
+            
+            var respuesta = _ClienteDatos.Eliminar(oCliente.ClienteID);
+
+            if (respuesta)
+                return RedirectToAction("Listar");
+            else
+                return View();
+        }
 
     }
 }

@@ -106,7 +106,7 @@ namespace GoloSAL.Datos
                     cmd.Parameters.AddWithValue("ClienteID", oCliente.ClienteID);
                     cmd.Parameters.AddWithValue("Nombre", oCliente.Nombre);
                     cmd.Parameters.AddWithValue("Direccion", oCliente.Direccion);
-                    cmd.Parameters.AddWithValue("telefono", oCliente.Telefono);
+                    cmd.Parameters.AddWithValue("Telefono", oCliente.Telefono);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
                 }
